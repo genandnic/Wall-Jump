@@ -1,0 +1,16 @@
+[
+{
+  "modid": "walljump",
+  "name": "Wall-Jump!",
+  "description": "Jump from wall to wall! Jump near a wall and hold the wall jump key (LSHIFT). Then while wall clinging, keep holding W and let go of LSHIFT to wall jump.",
+  "version": "1.12.2-1.3.2",
+  "mcversion": "1.12.2",
+  "url": "http://minecraft.curseforge.com/projects/wall-jump",
+  "updateUrl": "",
+  "authorList": ["genandnic"],
+  "credits": "",
+  "logoFile": "walljump.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
