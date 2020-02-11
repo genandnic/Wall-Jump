@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "genandnic.walljump.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [
+    "client.ClientPlayerEntityWallJumpMixin",
+    "client.ClientPlayerEntityDoubleJumpMixin",
+    "client.ClientPlayerEntityMiscellaneousMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

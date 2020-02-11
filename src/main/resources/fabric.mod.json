@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "walljump",
+  "version": "${version}",
+  "name": "Wall-Jump!",
+  "description": "Jump from wall to wall!",
+  "authors": [
+    "Genandnic",
+    "Liquidwarp"
+  ],
+  "contact": {
+    "homepage": "http://minecraft.curseforge.com/projects/wall-jump",
+    "sources": "https://github.com/LiquidwarpMC/wall-jump-fabric",
+    "issues": "https://github.com/LiquidwarpMC/wall-jump-fabric/issues"
+  },
+  "license": "GPLv3",
+  "icon": "assets/walljump/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "genandnic.walljump.WallJump"
+    ],
+    "client": [
+      "genandnic.walljump.WallJumpClient"
+    ]
+  },
+  "mixins": [
+    "walljump.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  }
+}
