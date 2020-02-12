@@ -1,6 +1,7 @@
 package genandnic.walljump;
 
 import genandnic.walljump.enchantment.DoubleJumpEnchantment;
+import genandnic.walljump.enchantment.SpeedBoostEnchantment;
 import genandnic.walljump.enchantment.WallJumpEnchantment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -19,6 +20,7 @@ public class WallJump implements ModInitializer {
 
 	public static Enchantment WALLJUMP_ENCHANTMENT;
 	public static Enchantment DOUBLEJUMP_ENCHANTMENT;
+	public static Enchantment SPEEDBOOST_ENCHANTMENT;
 
 	public static WallJumpConfig CONFIGURATION = ConfigFactory.create(WallJumpConfig.class);
 
@@ -43,6 +45,18 @@ public class WallJump implements ModInitializer {
 				Registry.ENCHANTMENT,
 				new Identifier("walljump", "doublejump"),
 				new DoubleJumpEnchantment(
+						Enchantment.Weight.RARE,
+						EnchantmentTarget.ARMOR_FEET,
+						new EquipmentSlot[] {
+								EquipmentSlot.FEET
+						}
+				)
+		);
+
+		SPEEDBOOST_ENCHANTMENT = Registry.register(
+				Registry.ENCHANTMENT,
+				new Identifier("walljump", "speedboost"),
+				new SpeedBoostEnchantment(
 						Enchantment.Weight.RARE,
 						EnchantmentTarget.ARMOR_FEET,
 						new EquipmentSlot[] {

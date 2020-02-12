@@ -9,8 +9,8 @@ public interface WallJumpConfig extends Config {
     @DefaultValue("false")
     boolean autoRotation();
 
-//    @DefaultValue("0.0")
-//    double elytraSpeedBoost();
+    @DefaultValue("0.0")
+    double elytraSpeedBoost();
 
     @DefaultValue("true")
     boolean enableEnchantments();
@@ -24,8 +24,8 @@ public interface WallJumpConfig extends Config {
 //    @DefaultValue("true")
 //    boolean playFallSound();
 
-//    @DefaultValue("0.0")
-//    double sprintSpeedBoost();
+    @DefaultValue("0.0")
+    double sprintSpeedBoost();
 
     @DefaultValue("true")
     boolean stepAssist();

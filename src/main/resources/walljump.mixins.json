@@ -6,7 +6,9 @@
   "client": [
     "client.ClientPlayerEntityWallJumpMixin",
     "client.ClientPlayerEntityDoubleJumpMixin",
-    "client.ClientPlayerEntityMiscellaneousMixin"
+    "client.ClientPlayerEntityMiscellaneousMixin",
+    "client.ClientPlayerEntitySpeedBoostMixin",
+    "client.LivingEntitySpeedBoostMixin"
   ],
   "injectors": {
     "defaultRequire": 1

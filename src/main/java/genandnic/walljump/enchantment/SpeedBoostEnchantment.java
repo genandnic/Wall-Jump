@@ -3,14 +3,13 @@ package genandnic.walljump.enchantment;
 import genandnic.walljump.WallJump;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 
-public class DoubleJumpEnchantment extends Enchantment {
-
-    public DoubleJumpEnchantment(Weight weight, EnchantmentTarget target, EquipmentSlot[] slots) {
-        super(weight, target, slots);
+public class SpeedBoostEnchantment extends Enchantment {
+    public SpeedBoostEnchantment(Weight weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
+        super(weight, type, slotTypes);
     }
 
     @Override
@@ -20,27 +19,17 @@ public class DoubleJumpEnchantment extends Enchantment {
 
     @Override
     public int getMaximumLevel() {
-        return 2;
+        return 3;
     }
 
     @Override
     public int getMinimumPower(int level) {
-        return level * 20;
+        return level * 15;
     }
 
     @Override
     public int getMaximumPower(int level) {
         return level * 60;
-    }
-
-    @Override
-    public boolean differs(Enchantment enchantment) {
-        if(enchantment instanceof ProtectionEnchantment) {
-            ProtectionEnchantment protection = (ProtectionEnchantment) enchantment;
-            return protection.protectionType != ProtectionEnchantment.Type.FALL;
-        }
-
-        return this != enchantment;
     }
 
     @Override
@@ -50,6 +39,6 @@ public class DoubleJumpEnchantment extends Enchantment {
             return false;
         }
 
-        return stack.isEnchantable();
+        return stack.isEnchantable() || stack.getItem() instanceof ElytraItem;
     }
 }
