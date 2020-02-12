@@ -10,8 +10,8 @@
   ],
   "contact": {
     "homepage": "http://minecraft.curseforge.com/projects/wall-jump",
-    "sources": "https://github.com/LiquidwarpMC/wall-jump-fabric",
-    "issues": "https://github.com/LiquidwarpMC/wall-jump-fabric/issues"
+    "sources": "https://github.com/genandnic/Wall-Jump",
+    "issues": "https://github.com/genandnic/Wall-Jump/issues"
   },
   "license": "GPLv3",
   "icon": "assets/walljump/icon.png",
