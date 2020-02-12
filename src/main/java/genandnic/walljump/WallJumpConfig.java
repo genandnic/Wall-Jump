@@ -1,7 +1,7 @@
 package genandnic.walljump;
-import org.aeonbits.owner.Config;
+import org.aeonbits.owner.Accessible;
 
-public interface WallJumpConfig extends Config {
+public interface WallJumpConfig extends Accessible {
 
     @DefaultValue("false")
     boolean allowReClinging();
