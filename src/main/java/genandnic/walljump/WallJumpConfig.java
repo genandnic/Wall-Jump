@@ -18,11 +18,11 @@ public interface WallJumpConfig extends Config {
     @DefaultValue("0.8")
     double exhaustionWallJump();
 
-//    @DefaultValue("7.5")
-//    double minFallDistance();
+    @DefaultValue("7.5")
+    double minFallDistance();
 
-//    @DefaultValue("true")
-//    boolean playFallSound();
+    @DefaultValue("true")
+    boolean playFallSound();
 
     @DefaultValue("0.0")
     double sprintSpeedBoost();
