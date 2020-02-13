@@ -16,7 +16,6 @@ public class ClientWorldFallingSoundMixin {
 
     @Inject(method = "addPlayer", at = @At(value = "TAIL"))
     private void addPlayerFallingSound(int id, AbstractClientPlayerEntity player, CallbackInfo ci) {
-        WallJumpClient.LOGGER.info("PLAYER ADD");
 
         if(player == MinecraftClient.getInstance().player) {
 
