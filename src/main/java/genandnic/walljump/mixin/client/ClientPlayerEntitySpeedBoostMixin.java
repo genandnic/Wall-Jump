@@ -8,6 +8,8 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
@@ -35,6 +37,15 @@ public abstract class ClientPlayerEntitySpeedBoostMixin extends AbstractClientPl
     }
 
     private void doSpeedBoost() {
+
+        StatusEffectInstance jumpBoostEffect = ((ClientPlayerEntity)(Object) this).getStatusEffect(StatusEffects.JUMP_BOOST);
+
+        int jumpBoostLevel = 0;
+        if(jumpBoostEffect != null)
+            jumpBoostLevel = jumpBoostEffect.getAmplifier() + 1;
+
+        this.flyingSpeed = (float) (this.getMovementSpeed() * (this.isSprinting() ? 1 : 1.3) / 5) * (jumpBoostLevel * 0.5F + 1);
+
         Vec3d pos = this.getPosVector();
         Vec3d look = this.getRotationVector();
         Vec3d motion = this.getVelocity();
