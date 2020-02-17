@@ -1,10 +1,21 @@
 package genandnic.walljump;
 import org.aeonbits.owner.Accessible;
 
+import java.util.Set;
+
 public interface WallJumpConfig extends Accessible {
 
-    @DefaultValue("false")
-    boolean allowReClinging();
+    @DefaultValue("BLACKLIST")
+    TagListOperation clingTagListOperation();
+
+    @DefaultValue("minecraft:ice,minecraft:impermeable,minecraft:sand")
+    Set<String> clingTags();
+
+    @DefaultValue("WHITELIST")
+    TagListOperation reClingTagListOperation();
+
+    @DefaultValue("minecraft:logs,minecraft:fences,minecraft:walls,minecraft:leaves,minecraft:wool")
+    Set<String> reClingTags();
 
     @DefaultValue("false")
     boolean autoRotation();

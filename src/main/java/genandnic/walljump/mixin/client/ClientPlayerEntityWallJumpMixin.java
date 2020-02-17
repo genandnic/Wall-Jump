@@ -1,9 +1,12 @@
 package genandnic.walljump.mixin.client;
 
 import com.mojang.authlib.GameProfile;
+import genandnic.walljump.TagListOperation;
 import genandnic.walljump.WallJump;
+import genandnic.walljump.WallJumpConfig;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.input.Input;
@@ -19,6 +22,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,6 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Mixin(ClientPlayerEntity.class)
@@ -197,10 +203,32 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         if(!this.world.doesNotCollide(this.getBoundingBox().offset(0, -0.8, 0)))
             return false;
 
-        if(WallJump.CONFIGURATION.allowReClinging() || this.getY() < this.lastJumpY - 1)
+        Block wallBlock = this.getWallBlock();
+
+        if (WallJump.CONFIGURATION.clingTagListOperation() == TagListOperation.BLACKLIST) {
+            if(WallJump.CONFIGURATION.clingTags().stream().anyMatch(o -> BlockTags.getContainer().get(new Identifier(o)).contains(wallBlock)))
+                return false;
+
+        } else if (WallJump.CONFIGURATION.clingTagListOperation() == TagListOperation.WHITELIST) {
+            if(WallJump.CONFIGURATION.clingTags().stream().noneMatch(o -> BlockTags.getContainer().get(new Identifier(o)).contains(wallBlock)))
+                return false;
+
+        }
+
+        if(this.staleWalls.isEmpty() || !this.staleWalls.containsAll(this.walls) || this.getY() < this.lastJumpY - 1)
             return true;
 
-        return !this.staleWalls.containsAll(this.walls);
+        if (WallJump.CONFIGURATION.reClingTagListOperation() == TagListOperation.BLACKLIST) {
+            if(WallJump.CONFIGURATION.reClingTags().stream().anyMatch(o -> BlockTags.getContainer().get(new Identifier(o)).contains(wallBlock)))
+                return false;
+
+        } else if (WallJump.CONFIGURATION.reClingTagListOperation() == TagListOperation.WHITELIST) {
+            if(WallJump.CONFIGURATION.reClingTags().stream().noneMatch(o -> BlockTags.getContainer().get(new Identifier(o)).contains(wallBlock)))
+                return false;
+
+        }
+
+        return true;
     }
 
 
@@ -247,10 +275,31 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
 
     private BlockPos getWallPos() {
 
-        BlockPos clingPos = this.getBlockPos().offset(this.getClingDirection());
-        return this.world.getBlockState(clingPos).getMaterial().isSolid() ? clingPos : clingPos.offset(Direction.UP);
+        BlockPos pos = this.getBlockPos();
+        BlockPos posUp = pos.offset(Direction.UP);
+        BlockPos clingPos = pos.offset(this.getClingDirection());
+        BlockPos clingPosUp = clingPos.offset(Direction.UP);
+
+        if(this.world.getBlockState(pos).getMaterial().isSolid()) {
+            LOGGER.info("current pos");
+            return pos;
+
+        } else if(this.world.getBlockState(posUp).getMaterial().isSolid()) {
+            LOGGER.info("current pos up");
+            return posUp;
+
+        } else {
+            LOGGER.info("cling pos or cling pos up");
+            return this.world.getBlockState(clingPos).getMaterial().isSolid() ? clingPos : clingPosUp;
+
+        }
     }
 
+
+    private Block getWallBlock() {
+
+        return this.world.getBlockState(this.getWallPos()).getBlock();
+    }
 
     private void wallJump(float up) {
 
