@@ -70,7 +70,7 @@ public class WallJump implements ModInitializer {
 				Registry.ENCHANTMENT,
 				new Identifier("walljump", "walljump"),
 				new WallJumpEnchantment(
-						Enchantment.Weight.UNCOMMON,
+						Enchantment.Rarity.UNCOMMON,
 						EnchantmentTarget.ARMOR_FEET,
 						new EquipmentSlot[] {
 								EquipmentSlot.FEET
@@ -82,7 +82,7 @@ public class WallJump implements ModInitializer {
 				Registry.ENCHANTMENT,
 				new Identifier("walljump", "doublejump"),
 				new DoubleJumpEnchantment(
-						Enchantment.Weight.RARE,
+						Enchantment.Rarity.RARE,
 						EnchantmentTarget.ARMOR_FEET,
 						new EquipmentSlot[] {
 								EquipmentSlot.FEET
@@ -94,7 +94,7 @@ public class WallJump implements ModInitializer {
 				Registry.ENCHANTMENT,
 				new Identifier("walljump", "speedboost"),
 				new SpeedBoostEnchantment(
-						Enchantment.Weight.RARE,
+						Enchantment.Rarity.RARE,
 						EnchantmentTarget.ARMOR_FEET,
 						new EquipmentSlot[] {
 								EquipmentSlot.FEET

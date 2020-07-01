@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -182,7 +182,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
 
         ItemStack stack = this.getEquippedStack(EquipmentSlot.FEET);
         if(!stack.isEmpty()) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(stack);
             return enchantments.containsKey(WallJump.WALLJUMP_ENCHANTMENT);
         }
 
@@ -302,7 +302,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         BlockState blockState = this.world.getBlockState(blockPos);
         if(blockState.getRenderType() != BlockRenderType.INVISIBLE) {
 
-            Vec3d pos = this.getPosVector();
+            Vec3d pos = this.getPos();
             Vec3i motion = this.getClingDirection().getVector();
             this.world.addParticle(
                     new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),

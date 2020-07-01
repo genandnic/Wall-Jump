@@ -46,7 +46,7 @@ public abstract class ClientPlayerEntitySpeedBoostMixin extends AbstractClientPl
 
         this.flyingSpeed = (float) (this.getMovementSpeed() * (this.isSprinting() ? 1 : 1.3) / 5) * (jumpBoostLevel * 0.5F + 1);
 
-        Vec3d pos = this.getPosVector();
+        Vec3d pos = this.getPos();
         Vec3d look = this.getRotationVector();
         Vec3d motion = this.getVelocity();
 
@@ -84,7 +84,7 @@ public abstract class ClientPlayerEntitySpeedBoostMixin extends AbstractClientPl
 
         ItemStack stack = this.getEquippedStack(slot);
         if (!stack.isEmpty()) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(stack);
             if (enchantments.containsKey(WallJump.SPEEDBOOST_ENCHANTMENT))
                 return enchantments.get(WallJump.SPEEDBOOST_ENCHANTMENT);
         }

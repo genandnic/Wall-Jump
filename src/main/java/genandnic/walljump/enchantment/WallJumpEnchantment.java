@@ -8,27 +8,27 @@ import net.minecraft.item.ItemStack;
 
 public class WallJumpEnchantment extends Enchantment {
 
-    public WallJumpEnchantment(Weight weight, EnchantmentTarget target, EquipmentSlot[] slots) {
+    public WallJumpEnchantment(Enchantment.Rarity weight, EnchantmentTarget target, EquipmentSlot[] slots) {
         super(weight, target, slots);
     }
 
     @Override
-    public int getMinimumLevel() {
+    public int getMinLevel() {
         return 1;
     }
 
     @Override
-    public int getMaximumLevel() {
+    public int getMaxLevel() {
         return 1;
     }
 
     @Override
-    public int getMinimumPower(int level) {
+    public int getMinPower(int level) {
         return 20;
     }
 
     @Override
-    public int getMaximumPower(int level) {
+    public int getMaxPower(int level) {
         return 60;
     }
 

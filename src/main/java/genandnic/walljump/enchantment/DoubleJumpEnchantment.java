@@ -9,32 +9,32 @@ import net.minecraft.item.ItemStack;
 
 public class DoubleJumpEnchantment extends Enchantment {
 
-    public DoubleJumpEnchantment(Weight weight, EnchantmentTarget target, EquipmentSlot[] slots) {
+    public DoubleJumpEnchantment(Enchantment.Rarity weight, EnchantmentTarget target, EquipmentSlot[] slots) {
         super(weight, target, slots);
     }
 
     @Override
-    public int getMinimumLevel() {
+    public int getMinLevel() {
         return 1;
     }
 
     @Override
-    public int getMaximumLevel() {
+    public int getMaxLevel() {
         return 2;
     }
 
     @Override
-    public int getMinimumPower(int level) {
+    public int getMinPower(int level) {
         return level * 20;
     }
 
     @Override
-    public int getMaximumPower(int level) {
+    public int getMaxPower(int level) {
         return level * 60;
     }
 
     @Override
-    public boolean differs(Enchantment enchantment) {
+    public boolean canAccept(Enchantment enchantment) {
         if(enchantment instanceof ProtectionEnchantment) {
             ProtectionEnchantment protection = (ProtectionEnchantment) enchantment;
             return protection.protectionType != ProtectionEnchantment.Type.FALL;

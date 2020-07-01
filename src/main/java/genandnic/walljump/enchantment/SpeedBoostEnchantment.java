@@ -8,27 +8,27 @@ import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 
 public class SpeedBoostEnchantment extends Enchantment {
-    public SpeedBoostEnchantment(Weight weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
+    public SpeedBoostEnchantment(Enchantment.Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
         super(weight, type, slotTypes);
     }
 
     @Override
-    public int getMinimumLevel() {
+    public int getMinLevel() {
         return 1;
     }
 
     @Override
-    public int getMaximumLevel() {
+    public int getMaxLevel() {
         return 3;
     }
 
     @Override
-    public int getMinimumPower(int level) {
+    public int getMinPower(int level) {
         return level * 15;
     }
 
     @Override
-    public int getMaximumPower(int level) {
+    public int getMaxPower(int level) {
         return level * 60;
     }
 

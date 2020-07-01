@@ -38,7 +38,7 @@ public class FallingSound extends MovingSoundInstance {
 
         } else {
 
-            this.done = true;
+            this.setDone();
 
         }
     }
