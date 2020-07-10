@@ -15,6 +15,9 @@ public interface WallJumpConfig extends Accessible {
     @DefaultValue("true")
     boolean enableEnchantments();
 
+	@DefaultValue("false")
+	boolean compatibleDoubleJumpEnchantment();
+
     @DefaultValue("0.8")
     double exhaustionWallJump();
 
