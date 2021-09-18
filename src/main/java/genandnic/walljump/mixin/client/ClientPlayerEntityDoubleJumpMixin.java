@@ -63,7 +63,7 @@ public abstract class ClientPlayerEntityDoubleJumpMixin extends AbstractClientPl
                 || this.world.containsFluid(box)
                 || this.ticksWallClinged > 0
                 || this.isRiding()
-                || this.abilities.allowFlying
+                || this.getAbilities().allowFlying
         ) {
 
             this.jumpCount = this.getMultiJumps();

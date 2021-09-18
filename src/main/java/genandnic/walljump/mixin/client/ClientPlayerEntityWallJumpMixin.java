@@ -65,7 +65,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         if(!this.canWallJump()) return;
 
         if(this.onGround
-                || this.abilities.flying
+                || this.getAbilities().flying
                 || !this.world.getFluidState(this.getBlockPos()).isEmpty()
                 || this.isRiding()
         ) {
@@ -93,8 +93,8 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
                 this.lastLimbDistance = 2.5F;
 
                 if (WallJump.CONFIGURATION.autoRotation()) {
-                    this.yaw = this.getClingDirection().getOpposite().asRotation();
-                    this.prevYaw = this.yaw;
+                    this.setYaw(this.getClingDirection().getOpposite().asRotation());
+                    this.prevYaw = this.getYaw();
                 }
 
                 this.ticksWallClinged = 1;
@@ -136,8 +136,8 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         }
 
         if(WallJump.CONFIGURATION.autoRotation()) {
-            this.yaw = this.getClingDirection().getOpposite().asRotation();
-            this.prevYaw = this.yaw;
+            this.setYaw(this.getClingDirection().getOpposite().asRotation());
+            this.prevYaw = this.getYaw();
         }
 
         this.setPos(this.clingX, this.getY(), this.clingZ);
@@ -194,7 +194,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         if(this.isClimbing() || this.getVelocity().getY() > 0.1 || this.getHungerManager().getFoodLevel() < 1)
             return false;
 
-        if(!this.world.doesNotCollide(this.getBoundingBox().offset(0, -0.8, 0)))
+        if(!this.world.isSpaceEmpty(this.getBoundingBox().offset(0, -0.8, 0)))
             return false;
 
         if(WallJump.CONFIGURATION.allowReClinging() || this.getY() < this.lastJumpY - 1)
@@ -231,7 +231,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
         for (Box axis : axes) {
             direction = Direction.fromHorizontal(i++);
 
-            if(!this.world.doesNotCollide(axis)) {
+            if(!this.world.isSpaceEmpty(axis)) {
                this.walls.add(direction);
                this.horizontalCollision = true;
             }

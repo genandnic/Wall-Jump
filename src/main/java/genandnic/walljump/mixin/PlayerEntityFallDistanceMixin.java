@@ -15,7 +15,7 @@ public abstract class PlayerEntityFallDistanceMixin {
     @Shadow
     public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
-    @ModifyArg(method = "handleFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;handleFallDamage(FF)Z"), index = 0)
+    @ModifyArg(method = "handleFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"), index = 0)
     private float adjustFallDistance(float value) {
         if (value > 3 && value <= WallJump.CONFIGURATION.minFallDistance()) {
             this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 0.5F, 1.0F);

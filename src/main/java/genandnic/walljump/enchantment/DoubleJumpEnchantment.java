@@ -35,8 +35,7 @@ public class DoubleJumpEnchantment extends Enchantment {
 
     @Override
     public boolean canAccept(Enchantment enchantment) {
-        if(enchantment instanceof ProtectionEnchantment) {
-            ProtectionEnchantment protection = (ProtectionEnchantment) enchantment;
+        if(enchantment instanceof ProtectionEnchantment protection) {
             return protection.protectionType != ProtectionEnchantment.Type.FALL;
         }
 
