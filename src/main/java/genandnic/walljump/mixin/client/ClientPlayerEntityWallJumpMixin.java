@@ -3,7 +3,7 @@ package genandnic.walljump.mixin.client;
 import com.mojang.authlib.GameProfile;
 import genandnic.walljump.WallJump;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.input.Input;
@@ -126,7 +126,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
 
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeBoolean(true);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(WallJump.WALL_JUMP_PACKET_ID, passedData);
+                ClientPlayNetworking.send(WallJump.WALL_JUMP_PACKET_ID, passedData);
 
                 this.wallJump((float) WallJump.CONFIGURATION.wallJumpHeight());
                 this.staleWalls = new HashSet<>(this.walls);
@@ -169,7 +169,7 @@ public abstract class ClientPlayerEntityWallJumpMixin extends AbstractClientPlay
 
             PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
             passedData.writeFloat((float) (motionY * motionY * 8));
-            ClientSidePacketRegistry.INSTANCE.sendToServer(WallJump.FALL_DISTANCE_PACKET_ID, passedData);
+            ClientPlayNetworking.send(WallJump.FALL_DISTANCE_PACKET_ID, passedData);
         }
 
         this.setVelocity(0.0, motionY, 0.0);
