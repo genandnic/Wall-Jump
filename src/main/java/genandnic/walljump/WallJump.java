@@ -4,7 +4,7 @@ import genandnic.walljump.enchantment.DoubleJumpEnchantment;
 import genandnic.walljump.enchantment.SpeedBoostEnchantment;
 import genandnic.walljump.enchantment.WallJumpEnchantment;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -20,7 +20,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-
 
 public class WallJump implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("WallJump");
@@ -103,21 +102,21 @@ public class WallJump implements ModInitializer {
 		);
 
 		// Packets
-		ServerSidePacketRegistry.INSTANCE.register(FALL_DISTANCE_PACKET_ID, ((packetContext, packetByteBuf) -> {
-			float fallDistance = packetByteBuf.readFloat();
-			packetContext.getTaskQueue().execute(() -> {
-				packetContext.getPlayer().fallDistance = fallDistance;
+		ServerPlayNetworking.registerGlobalReceiver(FALL_DISTANCE_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+			float fallDistance = buf.readFloat();
+			server.execute(() -> {
+				player.fallDistance = fallDistance;
 			});
-		}));
+		});
 
-		ServerSidePacketRegistry.INSTANCE.register(WALL_JUMP_PACKET_ID, ((packetContext, packetByteBuf) -> {
-			boolean didWallJump = packetByteBuf.readBoolean();
+		ServerPlayNetworking.registerGlobalReceiver(WALL_JUMP_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+			boolean didWallJump = buf.readBoolean();
 
-			packetContext.getTaskQueue().execute(() -> {
+			server.execute(() -> {
 				if(didWallJump)
-					packetContext.getPlayer().addExhaustion((float) WallJump.CONFIGURATION.exhaustionWallJump());
+					player.addExhaustion((float) WallJump.CONFIGURATION.exhaustionWallJump());
 			});
-		}));
+		});
 
 		LOGGER.info("[Wall Jump] initialized!");
 	}

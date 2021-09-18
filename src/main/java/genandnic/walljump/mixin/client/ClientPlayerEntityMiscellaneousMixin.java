@@ -30,7 +30,7 @@ public class ClientPlayerEntityMiscellaneousMixin extends AbstractClientPlayerEn
                 && this.getVelocity().getY() < 0.01
         ) {
 
-            if(this.world.doesNotCollide(this.getBoundingBox().expand(0.01, -this.stepHeight + 0.02, 0.01))) {
+            if(this.world.isSpaceEmpty(this.getBoundingBox().expand(0.01, -this.stepHeight + 0.02, 0.01))) {
 
                 this.onGround = true;
 

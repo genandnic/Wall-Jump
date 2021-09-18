@@ -54,7 +54,7 @@ public abstract class ClientPlayerEntitySpeedBoostMixin extends AbstractClientPl
 
             if (this.isSneaking()) {
 
-                if (this.pitch < 30F)
+                if (this.getPitch() < 30F)
                     this.setVelocity(motion.subtract(motion.multiply(0.05)));
 
             } else if (this.isSprinting()) {

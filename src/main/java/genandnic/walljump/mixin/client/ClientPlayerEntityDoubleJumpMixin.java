@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import genandnic.walljump.ClientPlayerEntityWallJumpInterface;
 import genandnic.walljump.WallJump;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -63,7 +63,7 @@ public abstract class ClientPlayerEntityDoubleJumpMixin extends AbstractClientPl
                 || this.world.containsFluid(box)
                 || this.ticksWallClinged > 0
                 || this.isRiding()
-                || this.abilities.allowFlying
+                || this.getAbilities().allowFlying
         ) {
 
             this.jumpCount = this.getMultiJumps();
@@ -84,7 +84,7 @@ public abstract class ClientPlayerEntityDoubleJumpMixin extends AbstractClientPl
 
                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                passedData.writeFloat(this.fallDistance);
-               ClientSidePacketRegistry.INSTANCE.sendToServer(WallJump.FALL_DISTANCE_PACKET_ID, passedData);
+               ClientPlayNetworking.send(WallJump.FALL_DISTANCE_PACKET_ID, passedData);
            }
 
            this.jumpKey = true;
