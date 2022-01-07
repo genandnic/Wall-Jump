@@ -1,64 +1,54 @@
 package genandnic.walljump;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import genandnic.walljump.enchantment.DoubleJumpEnchant;
+import genandnic.walljump.enchantment.SpeedBoostEnchant;
+import genandnic.walljump.enchantment.WallJumpEnchant;
+import genandnic.walljump.proxy.ClientProxy;
+import genandnic.walljump.proxy.CommonProxy;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.stream.Collectors;
-
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(WallJump.MOD_ID)
+@Mod.EventBusSubscriber(modid = WallJump.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WallJump
 {
     public static final String MOD_ID = "walljump";
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public WallJump() {
-        // Register the setup method for modloading
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.addListener(this::setup);
 
-
-        // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+    private void onCommonSetup(FMLCommonSetupEvent event) {
+        PROXY.setupCommon();
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    private void onClientSetup(FMLClientSetupEvent event) {
+        PROXY.setupClient();
+    }
+
+    public static Enchantment WALLJUMP_ENCHANT = new WallJumpEnchant();
+    public static Enchantment DOUBLEJUMP_ENCHANT = new DoubleJumpEnchant();
+    public static Enchantment SPEEDBOOST_ENCHANT = new SpeedBoostEnchant();
+
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        // do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
+    public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        event.getRegistry().register(WALLJUMP_ENCHANT);
+        event.getRegistry().register(DOUBLEJUMP_ENCHANT);
+        event.getRegistry().register(SPEEDBOOST_ENCHANT);
     }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "walljump:item/walljump_medallion"
+  }
+}
