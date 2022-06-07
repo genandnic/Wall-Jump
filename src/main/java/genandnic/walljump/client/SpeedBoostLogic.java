@@ -39,7 +39,7 @@ public class SpeedBoostLogic {
 
             } else if (pl.isSprinting()) {
 
-                float elytraSpeedBoost = Config.COMMON.elytraSpeedBoost.get().floatValue() + (getEquipmentBoost(pl, EquipmentSlot.CHEST) * 0.5f);
+                float elytraSpeedBoost = Config.COMMON.elytraSpeedBoost.get().floatValue() * (getEquipmentBoost(pl, EquipmentSlot.CHEST) * 0.5f);
                 Vec3 boost = new Vec3(look.x, look.y, look.z).normalize().scale(elytraSpeedBoost);
                 if (motion.length() <= boost.length()) {
                     pl.setDeltaMovement(motion.add(boost.multiply(0.05, 0.05, 0.05)));

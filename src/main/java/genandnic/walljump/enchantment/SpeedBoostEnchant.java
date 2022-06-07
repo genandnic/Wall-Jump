@@ -37,7 +37,7 @@ public class SpeedBoostEnchant extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return super.canEnchant(stack) || stack.getItem() instanceof ElytraItem;
+        return super.canEnchant(stack) || (stack.getItem() instanceof ElytraItem && Config.COMMON.enableElytraSpeedEnchantment.get());
     }
 
     @Override
