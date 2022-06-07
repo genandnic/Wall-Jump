@@ -13,6 +13,7 @@ public class Config {
         public final ForgeConfigSpec.BooleanValue autoRotation;
         public final ForgeConfigSpec.DoubleValue elytraSpeedBoost;
         public final ForgeConfigSpec.BooleanValue enableEnchantments;
+        public final ForgeConfigSpec.BooleanValue enableElytraSpeedEnchantment;
         public final ForgeConfigSpec.DoubleValue exhaustionWallJump;
         public final ForgeConfigSpec.DoubleValue minFallDistance;
         public final ForgeConfigSpec.BooleanValue playFallSound;
