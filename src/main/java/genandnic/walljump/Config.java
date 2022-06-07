@@ -33,11 +33,14 @@ public class Config {
                     .comment("Automatically turn the player when wall clinging")
                     .define("autoRotation", false);
             this.elytraSpeedBoost = builder
-                    .comment("Elytra speed boost; set to 0.0 to disable")
-                    .defineInRange("elytraSpeedBoost", 0.0, 0.0, 5.0);
+                    .comment("Elytra speed boost multiplier")
+                    .defineInRange("elytraSpeedBoost", 1.0, 0.0, 5.0);
             this.enableEnchantments = builder
                     .comment("Enable Wall-Jump enchantments in the enchanting table")
                     .define("enableEnchantments",true);
+            this.enableElytraSpeedEnchantment = builder
+                    .comment("Enable the Speed Boost enchantment for elytra")
+                    .define("enableElytraSpeedEnchantment",true);
             this.exhaustionWallJump = builder
                     .comment("Exhaustion gained per wall jump")
                     .defineInRange("exhaustionWallJump", 0.8, 0.0, 5.0);
